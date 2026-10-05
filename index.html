@@ -1,0 +1,4553 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Eleganzo.mir — Премиальная техника и товары</title>
+
+<meta name="description"
+      content="Eleganzo.mir — премиальный интернет-магазин электроники, дронов, инструментов, товаров для дома и детей.">
+
+<meta name="keywords"
+      content="Eleganzo.mir, интернет магазин, электроника, дроны, инструменты, Бишкек, Кыргызстан">
+
+<meta name="theme-color" content="#11110f">
+
+<meta property="og:title" content="Eleganzo.mir — Premium Store">
+<meta property="og:description" content="Техника и товары, выбранные со вкусом.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://images.unsplash.com/photo-1517336714739-489689fd1ca8">
+
+<link rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2311110f'/%3E%3Ctext x='50' y='65' text-anchor='middle' font-size='55' fill='%23d9c49a' font-family='serif'%3EE%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+    --black:#11110f;
+    --black2:#181815;
+    --black3:#20201c;
+    --cream:#f4f0e7;
+    --cream2:#e9e3d6;
+    --white:#ffffff;
+    --gold:#c7ad7b;
+    --gold2:#e0ca9a;
+    --gray:#85857e;
+    --gray2:#5f5f59;
+    --line:rgba(255,255,255,.1);
+    --darkline:rgba(17,17,15,.12);
+    --radius:20px;
+    --shadow:0 25px 80px rgba(0,0,0,.18);
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--cream);
+    color:var(--black);
+    overflow-x:hidden;
+}
+
+body.modal-open{
+    overflow:hidden;
+}
+
+button,
+input,
+select,
+textarea{
+    font:inherit;
+}
+
+button{
+    border:0;
+    cursor:pointer;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+img{
+    display:block;
+    max-width:100%;
+}
+
+.container{
+    width:min(1380px, calc(100% - 48px));
+    margin:auto;
+}
+
+/* =====================================
+   LOADING SCREEN
+===================================== */
+
+.loader{
+    position:fixed;
+    inset:0;
+    z-index:99999;
+    background:var(--black);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:.8s ease;
+}
+
+.loader.hide{
+    opacity:0;
+    visibility:hidden;
+}
+
+.loader-inner{
+    text-align:center;
+}
+
+.loader-logo{
+    font-family:"Playfair Display",serif;
+    color:var(--cream);
+    font-size:42px;
+    letter-spacing:6px;
+}
+
+.loader-line{
+    width:100px;
+    height:1px;
+    background:var(--gold);
+    margin:25px auto;
+    animation:loaderLine 1.3s infinite;
+}
+
+.loader-small{
+    color:#77776f;
+    font-size:10px;
+    letter-spacing:4px;
+    text-transform:uppercase;
+}
+
+@keyframes loaderLine{
+    0%{transform:scaleX(0)}
+    50%{transform:scaleX(1)}
+    100%{transform:scaleX(0)}
+}
+
+/* =====================================
+   OFFLINE
+===================================== */
+
+.offline{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:9990;
+    background:#b64335;
+    color:#fff;
+    text-align:center;
+    padding:9px;
+    font-size:12px;
+    display:none;
+}
+
+.offline.show{
+    display:block;
+}
+
+/* =====================================
+   HEADER
+===================================== */
+
+.header{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:5000;
+    height:82px;
+    transition:.35s ease;
+    color:#fff;
+}
+
+.header.scrolled{
+    background:rgba(17,17,15,.88);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.header-inner{
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:30px;
+}
+
+.logo{
+    font-family:"Playfair Display",serif;
+    font-size:26px;
+    letter-spacing:3px;
+    white-space:nowrap;
+}
+
+.logo span{
+    color:var(--gold);
+}
+
+.nav{
+    display:flex;
+    gap:30px;
+    align-items:center;
+}
+
+.nav a{
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:1.4px;
+    color:rgba(255,255,255,.78);
+    transition:.25s;
+}
+
+.nav a:hover{
+    color:#fff;
+}
+
+.header-actions{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.icon-btn{
+    width:43px;
+    height:43px;
+    border-radius:50%;
+    background:rgba(255,255,255,.08);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:.25s;
+    position:relative;
+}
+
+.icon-btn:hover{
+    background:rgba(255,255,255,.16);
+    transform:translateY(-2px);
+}
+
+.icon-btn svg{
+    width:19px;
+    height:19px;
+    stroke:currentColor;
+    fill:none;
+    stroke-width:1.5;
+}
+
+.cart-count{
+    position:absolute;
+    top:-3px;
+    right:-3px;
+    min-width:18px;
+    height:18px;
+    padding:0 5px;
+    border-radius:20px;
+    background:var(--gold);
+    color:var(--black);
+    font-size:10px;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.lang-btn{
+    min-width:43px;
+    height:43px;
+    border-radius:50%;
+    color:#fff;
+    background:rgba(255,255,255,.08);
+    font-size:10px;
+    letter-spacing:1px;
+}
+
+.menu-btn{
+    display:none;
+}
+
+/* =====================================
+   HERO
+===================================== */
+
+.hero{
+    min-height:100vh;
+    background:var(--black);
+    color:#fff;
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    align-items:flex-end;
+}
+
+.hero-bg{
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(90deg,rgba(17,17,15,.96) 0%,rgba(17,17,15,.65) 45%,rgba(17,17,15,.15) 100%),
+        linear-gradient(0deg,rgba(17,17,15,.85) 0%,transparent 55%),
+        url("https://images.unsplash.com/photo-1517336714739-489689fd1ca8?auto=format&fit=crop&w=2200&q=90")
+        center/cover;
+    transform:scale(1.03);
+    animation:heroZoom 10s ease forwards;
+}
+
+@keyframes heroZoom{
+    from{transform:scale(1.08)}
+    to{transform:scale(1)}
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+    width:100%;
+    padding:180px 0 85px;
+}
+
+.hero-eyebrow{
+    color:var(--gold2);
+    font-size:11px;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    margin-bottom:28px;
+}
+
+.hero h1{
+    max-width:850px;
+    font-family:"Playfair Display",serif;
+    font-weight:400;
+    font-size:clamp(55px,8vw,125px);
+    line-height:.9;
+    letter-spacing:-4px;
+}
+
+.hero h1 em{
+    color:var(--gold2);
+    font-style:normal;
+}
+
+.hero-text{
+    margin-top:35px;
+    max-width:470px;
+    color:rgba(255,255,255,.62);
+    font-size:15px;
+    line-height:1.8;
+}
+
+.hero-buttons{
+    margin-top:42px;
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    min-height:54px;
+    padding:0 27px;
+    border-radius:2px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1.7px;
+    transition:.3s;
+}
+
+.btn-dark{
+    background:#fff;
+    color:var(--black);
+}
+
+.btn-dark:hover{
+    background:var(--gold2);
+    transform:translateY(-3px);
+}
+
+.btn-outline{
+    border:1px solid rgba(255,255,255,.3);
+    color:#fff;
+    background:transparent;
+}
+
+.btn-outline:hover{
+    background:#fff;
+    color:var(--black);
+}
+
+.hero-bottom{
+    margin-top:85px;
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+}
+
+.hero-scroll{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    font-size:10px;
+    color:#77776f;
+    letter-spacing:2px;
+    text-transform:uppercase;
+}
+
+.scroll-line{
+    width:50px;
+    height:1px;
+    background:var(--gold);
+}
+
+/* =====================================
+   MARQUEE
+===================================== */
+
+.marquee{
+    overflow:hidden;
+    background:var(--gold);
+    color:var(--black);
+    padding:15px 0;
+}
+
+.marquee-track{
+    display:flex;
+    width:max-content;
+    animation:marquee 30s linear infinite;
+}
+
+.marquee-item{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:3px;
+    padding:0 30px;
+}
+
+@keyframes marquee{
+    from{transform:translateX(0)}
+    to{transform:translateX(-50%)}
+}
+
+/* =====================================
+   SECTION
+===================================== */
+
+.section{
+    padding:120px 0;
+}
+
+.section-dark{
+    background:var(--black);
+    color:#fff;
+}
+
+.section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    gap:30px;
+    margin-bottom:50px;
+}
+
+.section-label{
+    font-size:10px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:14px;
+}
+
+.section-title{
+    font-family:"Playfair Display",serif;
+    font-weight:400;
+    font-size:clamp(38px,5vw,72px);
+    line-height:1;
+}
+
+.section-desc{
+    max-width:420px;
+    color:var(--gray);
+    font-size:14px;
+    line-height:1.7;
+}
+
+/* =====================================
+   CATEGORIES
+===================================== */
+
+.categories{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+}
+
+.category{
+    position:relative;
+    height:410px;
+    overflow:hidden;
+    background:#ddd;
+    color:#fff;
+    cursor:pointer;
+}
+
+.category.large{
+    grid-column:span 2;
+}
+
+.category img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.8s cubic-bezier(.2,.7,.2,1);
+}
+
+.category::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(0deg,rgba(0,0,0,.75),transparent 65%);
+}
+
+.category:hover img{
+    transform:scale(1.07);
+}
+
+.category-content{
+    position:absolute;
+    z-index:2;
+    left:28px;
+    right:28px;
+    bottom:25px;
+}
+
+.category-number{
+    font-size:10px;
+    color:var(--gold2);
+    letter-spacing:2px;
+    margin-bottom:9px;
+}
+
+.category-name{
+    font-family:"Playfair Display",serif;
+    font-size:30px;
+}
+
+.category-arrow{
+    position:absolute;
+    right:25px;
+    bottom:25px;
+    z-index:3;
+    width:40px;
+    height:40px;
+    border:1px solid rgba(255,255,255,.35);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+/* =====================================
+   SEARCH
+===================================== */
+
+.search-area{
+    background:#e7e1d5;
+    padding:35px 0;
+}
+
+.search-box{
+    position:relative;
+}
+
+.search-box input{
+    width:100%;
+    height:70px;
+    border:0;
+    background:#f5f1e9;
+    padding:0 70px 0 25px;
+    outline:none;
+    font-size:16px;
+    color:var(--black);
+    border-bottom:1px solid var(--darkline);
+}
+
+.search-box svg{
+    position:absolute;
+    right:25px;
+    top:25px;
+    width:20px;
+    height:20px;
+}
+
+/* =====================================
+   FILTER BAR
+===================================== */
+
+.catalog-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:35px;
+}
+
+.filters{
+    display:flex;
+    gap:8px;
+    overflow:auto;
+    scrollbar-width:none;
+}
+
+.filters::-webkit-scrollbar{
+    display:none;
+}
+
+.filter{
+    padding:11px 17px;
+    background:transparent;
+    border:1px solid var(--darkline);
+    white-space:nowrap;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    transition:.25s;
+}
+
+.filter.active,
+.filter:hover{
+    background:var(--black);
+    color:#fff;
+    border-color:var(--black);
+}
+
+.sort-select{
+    border:1px solid var(--darkline);
+    background:transparent;
+    padding:11px 15px;
+    outline:none;
+    font-size:11px;
+}
+
+/* =====================================
+   PRODUCT GRID
+===================================== */
+
+.products{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:30px 14px;
+}
+
+.product{
+    min-width:0;
+    position:relative;
+}
+
+.product-image{
+    height:430px;
+    background:#e5e0d7;
+    overflow:hidden;
+    position:relative;
+}
+
+.product-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.6s;
+}
+
+.product:hover .product-image img{
+    transform:scale(1.035);
+}
+
+.product-badge{
+    position:absolute;
+    top:15px;
+    left:15px;
+    z-index:2;
+    padding:7px 10px;
+    background:var(--black);
+    color:#fff;
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.product-badge.gold{
+    background:var(--gold);
+    color:var(--black);
+}
+
+.product-actions{
+    position:absolute;
+    right:15px;
+    top:15px;
+    z-index:3;
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+    opacity:0;
+    transform:translateX(10px);
+    transition:.3s;
+}
+
+.product:hover .product-actions{
+    opacity:1;
+    transform:translateX(0);
+}
+
+.product-action{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:rgba(255,255,255,.92);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.product-action svg{
+    width:17px;
+    height:17px;
+}
+
+.product-info{
+    padding:18px 3px 0;
+}
+
+.product-category{
+    font-size:9px;
+    color:#898980;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+}
+
+.product-name{
+    font-family:"Playfair Display",serif;
+    font-size:21px;
+    margin-top:6px;
+}
+
+.product-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-top:11px;
+}
+
+.product-price{
+    font-size:14px;
+    font-weight:600;
+}
+
+.product-stock{
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    color:#71816e;
+}
+
+.product-stock.out{
+    color:#a45146;
+}
+
+.add-cart{
+    margin-top:15px;
+    width:100%;
+    height:44px;
+    background:var(--black);
+    color:#fff;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    transition:.25s;
+}
+
+.add-cart:hover{
+    background:#2a2a25;
+}
+
+.add-cart:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+}
+
+/* =====================================
+   PROMO
+===================================== */
+
+.promo{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    min-height:600px;
+}
+
+.promo-image{
+    background:
+        url("https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1300&q=85")
+        center/cover;
+}
+
+.promo-content{
+    background:var(--black);
+    color:#fff;
+    padding:80px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.promo-title{
+    font-family:"Playfair Display",serif;
+    font-size:clamp(45px,5vw,75px);
+    line-height:.98;
+}
+
+.promo-text{
+    margin-top:28px;
+    max-width:440px;
+    color:#888880;
+    line-height:1.8;
+    font-size:14px;
+}
+
+.promo .btn{
+    margin-top:35px;
+    align-self:flex-start;
+}
+
+/* =====================================
+   BENEFITS
+===================================== */
+
+.benefits{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    border-top:1px solid var(--darkline);
+    border-bottom:1px solid var(--darkline);
+}
+
+.benefit{
+    padding:40px 30px;
+    border-right:1px solid var(--darkline);
+}
+
+.benefit:last-child{
+    border-right:0;
+}
+
+.benefit-number{
+    color:var(--gold);
+    font-size:11px;
+}
+
+.benefit-title{
+    margin-top:30px;
+    font-family:"Playfair Display",serif;
+    font-size:23px;
+}
+
+.benefit-text{
+    margin-top:12px;
+    color:#888880;
+    font-size:12px;
+    line-height:1.7;
+}
+
+/* =====================================
+   INSTAGRAM
+===================================== */
+
+.instagram-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:5px;
+}
+
+.insta{
+    height:270px;
+    overflow:hidden;
+}
+
+.insta img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.6s;
+}
+
+.insta:hover img{
+    transform:scale(1.06);
+}
+
+/* =====================================
+   FOOTER
+===================================== */
+
+.footer{
+    background:var(--black);
+    color:#fff;
+    padding:90px 0 30px;
+}
+
+.footer-top{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr 1.3fr;
+    gap:60px;
+    padding-bottom:80px;
+}
+
+.footer-logo{
+    font-family:"Playfair Display",serif;
+    font-size:38px;
+    letter-spacing:3px;
+}
+
+.footer-logo span{
+    color:var(--gold);
+}
+
+.footer-desc{
+    color:#77776f;
+    font-size:13px;
+    line-height:1.8;
+    max-width:330px;
+    margin-top:22px;
+}
+
+.footer-title{
+    color:#fff;
+    font-size:10px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-bottom:22px;
+}
+
+.footer a{
+    display:block;
+    color:#85857e;
+    font-size:12px;
+    margin-bottom:12px;
+    transition:.2s;
+}
+
+.footer a:hover{
+    color:#fff;
+}
+
+.footer-contact{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+}
+
+.footer-contact a{
+    margin:0;
+}
+
+.footer-bottom{
+    border-top:1px solid rgba(255,255,255,.1);
+    padding-top:25px;
+    display:flex;
+    justify-content:space-between;
+    color:#65655f;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+/* =====================================
+   FLOATING WHATSAPP
+===================================== */
+
+.whatsapp-float{
+    position:fixed;
+    right:24px;
+    bottom:24px;
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    background:#1fa855;
+    z-index:4500;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 12px 40px rgba(0,0,0,.25);
+    transition:.3s;
+}
+
+.whatsapp-float:hover{
+    transform:translateY(-5px) scale(1.04);
+}
+
+.whatsapp-icon{
+    width:28px;
+    height:28px;
+    fill:#fff;
+}
+
+/* =====================================
+   CART DRAWER
+===================================== */
+
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.6);
+    z-index:6000;
+    opacity:0;
+    visibility:hidden;
+    transition:.3s;
+}
+
+.overlay.active{
+    opacity:1;
+    visibility:visible;
+}
+
+.cart{
+    position:fixed;
+    z-index:7000;
+    top:0;
+    right:0;
+    width:min(500px,100%);
+    height:100vh;
+    background:#f6f2ea;
+    transform:translateX(100%);
+    transition:.45s cubic-bezier(.7,0,.2,1);
+    display:flex;
+    flex-direction:column;
+}
+
+.cart.active{
+    transform:translateX(0);
+}
+
+.cart-head{
+    padding:25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid var(--darkline);
+}
+
+.cart-title{
+    font-family:"Playfair Display",serif;
+    font-size:28px;
+}
+
+.close{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:#e6e0d5;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+}
+
+.cart-items{
+    flex:1;
+    overflow:auto;
+    padding:20px 25px;
+}
+
+.empty-cart{
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:#888;
+}
+
+.empty-cart-title{
+    font-family:"Playfair Display",serif;
+    font-size:28px;
+    color:var(--black);
+}
+
+.empty-cart p{
+    margin-top:10px;
+    font-size:12px;
+}
+
+.cart-item{
+    display:grid;
+    grid-template-columns:80px 1fr auto;
+    gap:15px;
+    padding:17px 0;
+    border-bottom:1px solid var(--darkline);
+}
+
+.cart-item-image{
+    width:80px;
+    height:90px;
+    background:#ddd;
+}
+
+.cart-item-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.cart-item-name{
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+}
+
+.cart-item-variant{
+    color:#888;
+    font-size:10px;
+    margin-top:5px;
+}
+
+.cart-item-price{
+    margin-top:9px;
+    font-size:12px;
+    font-weight:600;
+}
+
+.qty{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    margin-top:10px;
+}
+
+.qty button{
+    width:25px;
+    height:25px;
+    border:1px solid var(--darkline);
+    background:transparent;
+}
+
+.qty span{
+    font-size:11px;
+}
+
+.remove-item{
+    color:#999;
+    font-size:10px;
+    margin-top:9px;
+    text-decoration:underline;
+    cursor:pointer;
+}
+
+.cart-total{
+    padding:25px;
+    border-top:1px solid var(--darkline);
+}
+
+.total-row{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:10px;
+    font-size:13px;
+}
+
+.total-row.big{
+    font-size:20px;
+    font-weight:600;
+    margin-top:16px;
+}
+
+.checkout-btn{
+    width:100%;
+    height:56px;
+    background:var(--black);
+    color:#fff;
+    margin-top:20px;
+    text-transform:uppercase;
+    font-size:10px;
+    letter-spacing:2px;
+}
+
+/* =====================================
+   MODALS
+===================================== */
+
+.modal{
+    position:fixed;
+    inset:0;
+    z-index:8000;
+    background:rgba(0,0,0,.72);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    opacity:0;
+    visibility:hidden;
+    transition:.3s;
+}
+
+.modal.active{
+    opacity:1;
+    visibility:visible;
+}
+
+.modal-box{
+    width:min(1050px,100%);
+    max-height:92vh;
+    overflow:auto;
+    background:#f6f2ea;
+    transform:translateY(20px);
+    transition:.35s;
+}
+
+.modal.active .modal-box{
+    transform:translateY(0);
+}
+
+.product-modal{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+}
+
+.modal-product-image{
+    min-height:650px;
+    background:#ded8cd;
+}
+
+.modal-product-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.modal-product-info{
+    padding:60px;
+    position:relative;
+}
+
+.modal-close{
+    position:absolute;
+    top:20px;
+    right:20px;
+}
+
+.modal-category{
+    color:#9b8560;
+    text-transform:uppercase;
+    font-size:10px;
+    letter-spacing:2px;
+}
+
+.modal-product-name{
+    font-family:"Playfair Display",serif;
+    font-size:50px;
+    line-height:1;
+    margin-top:15px;
+}
+
+.modal-price{
+    margin-top:25px;
+    font-size:22px;
+    font-weight:600;
+}
+
+.modal-description{
+    color:#77776f;
+    font-size:13px;
+    line-height:1.8;
+    margin-top:25px;
+}
+
+.variant-title{
+    margin-top:35px;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:2px;
+}
+
+.variants{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:12px;
+}
+
+.variant{
+    padding:12px 15px;
+    border:1px solid var(--darkline);
+    background:transparent;
+    font-size:10px;
+}
+
+.variant.active{
+    background:var(--black);
+    color:#fff;
+}
+
+.modal-qty{
+    display:flex;
+    align-items:center;
+    margin-top:25px;
+    gap:12px;
+}
+
+.modal-qty button{
+    width:38px;
+    height:38px;
+    background:#e5dfd4;
+}
+
+.modal-add{
+    width:100%;
+    height:55px;
+    margin-top:25px;
+    background:var(--black);
+    color:#fff;
+    text-transform:uppercase;
+    font-size:10px;
+    letter-spacing:2px;
+}
+
+/* =====================================
+   CHECKOUT
+===================================== */
+
+.checkout-box{
+    width:min(700px,100%);
+    background:#f6f2ea;
+    max-height:92vh;
+    overflow:auto;
+    padding:45px;
+    position:relative;
+}
+
+.checkout-title{
+    font-family:"Playfair Display",serif;
+    font-size:42px;
+}
+
+.checkout-subtitle{
+    color:#888;
+    font-size:12px;
+    margin-top:8px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    margin-top:30px;
+}
+
+.field{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+}
+
+.field.full{
+    grid-column:1/-1;
+}
+
+.field label{
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    color:#777;
+}
+
+.field input,
+.field select,
+.field textarea{
+    border:1px solid var(--darkline);
+    background:#fffaf2;
+    outline:none;
+    padding:14px;
+    min-height:47px;
+}
+
+.field textarea{
+    min-height:90px;
+    resize:vertical;
+}
+
+.delivery-box{
+    margin-top:25px;
+    padding:20px;
+    background:#e9e2d6;
+}
+
+.delivery-row{
+    display:flex;
+    justify-content:space-between;
+    font-size:12px;
+    margin-bottom:9px;
+}
+
+.payment{
+    margin-top:25px;
+    border:1px solid var(--darkline);
+    padding:20px;
+}
+
+.payment-title{
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:2px;
+}
+
+.mbank{
+    margin-top:15px;
+    display:flex;
+    gap:20px;
+    align-items:center;
+}
+
+.qr{
+    width:120px;
+    height:120px;
+    background:#fff;
+    padding:7px;
+}
+
+.qr img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+.mbank-info{
+    font-size:12px;
+    line-height:1.7;
+    color:#777;
+}
+
+.receipt{
+    margin-top:20px;
+}
+
+.receipt input{
+    width:100%;
+    padding:13px;
+    border:1px solid var(--darkline);
+}
+
+.order-submit{
+    width:100%;
+    height:55px;
+    margin-top:25px;
+    background:var(--black);
+    color:#fff;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-size:10px;
+}
+
+.order-submit:disabled{
+    opacity:.5;
+}
+
+/* =====================================
+   SUCCESS
+===================================== */
+
+.success{
+    text-align:center;
+    padding:70px 30px;
+}
+
+.success-icon{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    background:var(--gold);
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+}
+
+.success h2{
+    font-family:"Playfair Display",serif;
+    font-size:45px;
+    margin-top:25px;
+}
+
+.success p{
+    color:#777;
+    line-height:1.7;
+    font-size:13px;
+    margin-top:12px;
+}
+
+/* =====================================
+   TOAST
+===================================== */
+
+.toast{
+    position:fixed;
+    bottom:30px;
+    left:50%;
+    z-index:10000;
+    transform:translate(-50%,30px);
+    background:var(--black);
+    color:#fff;
+    padding:14px 22px;
+    font-size:11px;
+    opacity:0;
+    visibility:hidden;
+    transition:.3s;
+}
+
+.toast.show{
+    opacity:1;
+    visibility:visible;
+    transform:translate(-50%,0);
+}
+
+/* =====================================
+   SKELETON
+===================================== */
+
+.skeleton{
+    animation:skeleton 1.4s infinite;
+    background:#ded9cf;
+}
+
+@keyframes skeleton{
+    0%{opacity:.6}
+    50%{opacity:1}
+    100%{opacity:.6}
+}
+
+/* =====================================
+   REVEAL
+===================================== */
+
+.reveal{
+    opacity:0;
+    transform:translateY(30px);
+    transition:.8s ease;
+}
+
+.reveal.visible{
+    opacity:1;
+    transform:none;
+}
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media(max-width:1000px){
+
+    .nav{
+        display:none;
+    }
+
+    .menu-btn{
+        display:flex;
+    }
+
+    .categories{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .category.large{
+        grid-column:span 2;
+    }
+
+    .products{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .product-image{
+        height:360px;
+    }
+
+    .promo-content{
+        padding:50px;
+    }
+
+    .benefits{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .benefit:nth-child(2){
+        border-right:0;
+    }
+
+    .benefit:nth-child(-n+2){
+        border-bottom:1px solid var(--darkline);
+    }
+
+    .footer-top{
+        grid-template-columns:1.5fr 1fr 1fr;
+    }
+
+    .footer-contact-column{
+        grid-column:1/-1;
+    }
+
+    .instagram-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+}
+
+@media(max-width:700px){
+
+    .container{
+        width:min(100% - 28px,1380px);
+    }
+
+    .header{
+        height:70px;
+    }
+
+    .logo{
+        font-size:21px;
+    }
+
+    .header-actions{
+        gap:5px;
+    }
+
+    .icon-btn,
+    .lang-btn{
+        width:38px;
+        height:38px;
+        min-width:38px;
+    }
+
+    .hero-content{
+        padding:150px 0 45px;
+    }
+
+    .hero h1{
+        font-size:54px;
+        letter-spacing:-2px;
+    }
+
+    .hero-text{
+        font-size:13px;
+    }
+
+    .hero-bottom{
+        margin-top:55px;
+    }
+
+    .section{
+        padding:75px 0;
+    }
+
+    .section-head{
+        display:block;
+        margin-bottom:30px;
+    }
+
+    .section-desc{
+        margin-top:18px;
+    }
+
+    .categories{
+        grid-template-columns:1fr 1fr;
+        gap:5px;
+    }
+
+    .category{
+        height:250px;
+    }
+
+    .category.large{
+        grid-column:span 2;
+        height:330px;
+    }
+
+    .category-content{
+        left:17px;
+        bottom:17px;
+    }
+
+    .category-name{
+        font-size:23px;
+    }
+
+    .category-arrow{
+        right:14px;
+        bottom:14px;
+        width:34px;
+        height:34px;
+    }
+
+    .catalog-bar{
+        display:block;
+    }
+
+    .sort-select{
+        margin-top:12px;
+        width:100%;
+        height:43px;
+    }
+
+    .products{
+        grid-template-columns:1fr 1fr;
+        gap:30px 8px;
+    }
+
+    .product-image{
+        height:250px;
+    }
+
+    .product-info{
+        padding-top:12px;
+    }
+
+    .product-name{
+        font-size:17px;
+    }
+
+    .product-price{
+        font-size:12px;
+    }
+
+    .product-actions{
+        opacity:1;
+        transform:none;
+        right:8px;
+        top:8px;
+    }
+
+    .product-action{
+        width:32px;
+        height:32px;
+    }
+
+    .add-cart{
+        height:40px;
+        font-size:9px;
+    }
+
+    .promo{
+        grid-template-columns:1fr;
+    }
+
+    .promo-image{
+        height:380px;
+    }
+
+    .promo-content{
+        padding:55px 25px;
+    }
+
+    .benefits{
+        grid-template-columns:1fr;
+    }
+
+    .benefit{
+        border-right:0!important;
+        border-bottom:1px solid var(--darkline);
+    }
+
+    .benefit:last-child{
+        border-bottom:0;
+    }
+
+    .instagram-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .insta{
+        height:190px;
+    }
+
+    .footer-top{
+        grid-template-columns:1fr 1fr;
+        gap:40px 20px;
+    }
+
+    .footer-main{
+        grid-column:1/-1;
+    }
+
+    .footer-bottom{
+        display:block;
+        line-height:2;
+    }
+
+    .product-modal{
+        grid-template-columns:1fr;
+    }
+
+    .modal-product-image{
+        min-height:350px;
+        max-height:45vh;
+    }
+
+    .modal-product-info{
+        padding:30px 25px;
+    }
+
+    .modal-product-name{
+        font-size:38px;
+    }
+
+    .checkout-box{
+        padding:30px 20px;
+    }
+
+    .checkout-title{
+        font-size:35px;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .field.full{
+        grid-column:auto;
+    }
+
+    .mbank{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .whatsapp-float{
+        width:52px;
+        height:52px;
+        right:15px;
+        bottom:15px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- =====================================
+     LOADER
+===================================== -->
+
+<div class="loader" id="loader">
+    <div class="loader-inner">
+        <div class="loader-logo">ELEGANZO<span style="color:#c7ad7b">.</span>MIR</div>
+        <div class="loader-line"></div>
+        <div class="loader-small">Premium Store</div>
+    </div>
+</div>
+
+<div class="offline" id="offlineBar">
+    Нет подключения к интернету. Некоторые функции временно недоступны.
+</div>
+
+<!-- =====================================
+     HEADER
+===================================== -->
+
+<header class="header" id="header">
+
+    <div class="container header-inner">
+
+        <a href="#" class="logo">
+            ELEGANZO<span>.MIR</span>
+        </a>
+
+        <nav class="nav">
+            <a href="#catalog">Каталог</a>
+            <a href="#categories">Категории</a>
+            <a href="#selection">Selection</a>
+            <a href="#about">О нас</a>
+            <a href="#contacts">Контакты</a>
+        </nav>
+
+        <div class="header-actions">
+
+            <button class="icon-btn" onclick="openSearch()" aria-label="Поиск">
+
+                <svg viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="7"></circle>
+                    <path d="M16.5 16.5L21 21"></path>
+                </svg>
+
+            </button>
+
+            <button class="icon-btn" onclick="openCart()" aria-label="Корзина">
+
+                <svg viewBox="0 0 24 24">
+                    <path d="M6 8h12l1 13H5L6 8z"></path>
+                    <path d="M9 8a3 3 0 0 1 6 0"></path>
+                </svg>
+
+                <span class="cart-count" id="cartCount">0</span>
+
+            </button>
+
+            <button class="lang-btn" onclick="toggleLanguage()" id="langButton">
+                RU
+            </button>
+
+            <button class="icon-btn menu-btn" onclick="openMobileMenu()">
+
+                <svg viewBox="0 0 24 24">
+                    <path d="M4 7h16"></path>
+                    <path d="M4 12h16"></path>
+                    <path d="M4 17h16"></path>
+                </svg>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</header>
+
+<!-- =====================================
+     HERO
+===================================== -->
+
+<section class="hero">
+
+    <div class="hero-bg"></div>
+
+    <div class="container hero-content">
+
+        <div class="hero-eyebrow">
+            Eleganzo.mir / Premium Store
+        </div>
+
+        <h1>
+            ВЫБИРАЙ<br>
+            <em>КРАСИВО.</em>
+        </h1>
+
+        <p class="hero-text">
+            Техника, электроника и товары для жизни,
+            которые сочетают функциональность,
+            качество и стиль.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="#catalog" class="btn btn-dark">
+                Смотреть каталог
+                →
+            </a>
+
+            <a href="#selection" class="btn btn-outline">
+                Eleganzo Selection
+            </a>
+
+        </div>
+
+        <div class="hero-bottom">
+
+            <div class="hero-scroll">
+                <span class="scroll-line"></span>
+                Scroll to explore
+            </div>
+
+            <div style="font-size:10px;color:#77776f;letter-spacing:2px;">
+                BISHKEK / KYRGYZSTAN
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================
+     MARQUEE
+===================================== -->
+
+<div class="marquee">
+
+    <div class="marquee-track">
+
+        <div class="marquee-item">Premium selection</div>
+        <div class="marquee-item">Quality first</div>
+        <div class="marquee-item">Delivery across Kyrgyzstan</div>
+        <div class="marquee-item">Eleganzo.mir</div>
+        <div class="marquee-item">Premium selection</div>
+        <div class="marquee-item">Quality first</div>
+        <div class="marquee-item">Delivery across Kyrgyzstan</div>
+        <div class="marquee-item">Eleganzo.mir</div>
+
+    </div>
+
+</div>
+
+<!-- =====================================
+     CATEGORIES
+===================================== -->
+
+<section class="section" id="categories">
+
+    <div class="container">
+
+        <div class="section-head reveal">
+
+            <div>
+                <div class="section-label">
+                    01 / Categories
+                </div>
+
+                <h2 class="section-title">
+                    Найди своё.
+                </h2>
+            </div>
+
+            <p class="section-desc">
+                Мы собрали товары для работы,
+                отдыха, дома и повседневной жизни
+                в одном пространстве.
+            </p>
+
+        </div>
+
+        <div class="categories">
+
+            <div class="category large reveal"
+                 onclick="setCategory('electronics')">
+
+                <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=1200&q=85">
+
+                <div class="category-content">
+                    <div class="category-number">01</div>
+                    <div class="category-name">Электроника</div>
+                </div>
+
+                <div class="category-arrow">↗</div>
+
+            </div>
+
+            <div class="category reveal"
+                 onclick="setCategory('drones')">
+
+                <img src="https://images.unsplash.com/photo-1473968512647-3e447244af8f?auto=format&fit=crop&w=900&q=85">
+
+                <div class="category-content">
+                    <div class="category-number">02</div>
+                    <div class="category-name">Дроны</div>
+                </div>
+
+                <div class="category-arrow">↗</div>
+
+            </div>
+
+            <div class="category reveal"
+                 onclick="setCategory('tools')">
+
+                <img src="https://images.unsplash.com/photo-1530124566582-a618bc2615dc?auto=format&fit=crop&w=900&q=85">
+
+                <div class="category-content">
+                    <div class="category-number">03</div>
+                    <div class="category-name">Инструменты</div>
+                </div>
+
+                <div class="category-arrow">↗</div>
+
+            </div>
+
+            <div class="category reveal"
+                 onclick="setCategory('home')">
+
+                <img src="https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=900&q=85">
+
+                <div class="category-content">
+                    <div class="category-number">04</div>
+                    <div class="category-name">Для дома</div>
+                </div>
+
+                <div class="category-arrow">↗</div>
+
+            </div>
+
+            <div class="category reveal"
+                 onclick="setCategory('children')">
+
+                <img src="https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&w=900&q=85">
+
+                <div class="category-content">
+                    <div class="category-number">05</div>
+                    <div class="category-name">Для детей</div>
+                </div>
+
+                <div class="category-arrow">↗</div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================
+     SEARCH
+===================================== -->
+
+<div class="search-area" id="searchArea">
+
+    <div class="container">
+
+        <div class="search-box">
+
+            <input
+                type="search"
+                id="searchInput"
+                placeholder="Поиск по каталогу..."
+                oninput="handleSearch(this.value)"
+            >
+
+            <svg viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="7"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"></circle>
+                <path d="M16.5 16.5L21 21"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"></path>
+            </svg>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =====================================
+     CATALOG
+===================================== -->
+
+<section class="section" id="catalog">
+
+    <div class="container">
+
+        <div class="section-head reveal">
+
+            <div>
+                <div class="section-label">
+                    02 / Shop
+                </div>
+
+                <h2 class="section-title">
+                    Каталог.
+                </h2>
+            </div>
+
+            <p class="section-desc">
+                Актуальная подборка Eleganzo.mir.
+                Выбирайте товар, вариант и количество —
+                всё остальное сделаем максимально просто.
+            </p>
+
+        </div>
+
+        <div class="catalog-bar">
+
+            <div class="filters">
+
+                <button class="filter active"
+                        data-category="all"
+                        onclick="setCategory('all')">
+                    Все
+                </button>
+
+                <button class="filter"
+                        data-category="electronics"
+                        onclick="setCategory('electronics')">
+                    Электроника
+                </button>
+
+                <button class="filter"
+                        data-category="drones"
+                        onclick="setCategory('drones')">
+                    Дроны
+                </button>
+
+                <button class="filter"
+                        data-category="tools"
+                        onclick="setCategory('tools')">
+                    Инструменты
+                </button>
+
+                <button class="filter"
+                        data-category="phones"
+                        onclick="setCategory('phones')">
+                    Для телефона
+                </button>
+
+                <button class="filter"
+                        data-category="home"
+                        onclick="setCategory('home')">
+                    Для дома
+                </button>
+
+                <button class="filter"
+                        data-category="children"
+                        onclick="setCategory('children')">
+                    Для детей
+                </button>
+
+            </div>
+
+            <select class="sort-select"
+                    id="sortSelect"
+                    onchange="sortProducts(this.value)">
+
+                <option value="default">Сначала популярные</option>
+                <option value="priceLow">Цена: по возрастанию</option>
+                <option value="priceHigh">Цена: по убыванию</option>
+                <option value="name">По названию</option>
+
+            </select>
+
+        </div>
+
+        <div class="products" id="products"></div>
+
+    </div>
+
+</section>
+
+<!-- =====================================
+     PREMIUM SELECTION
+===================================== -->
+
+<section class="section section-dark" id="selection">
+
+    <div class="container">
+
+        <div class="section-head reveal">
+
+            <div>
+                <div class="section-label">
+                    03 / Selection
+                </div>
+
+                <h2 class="section-title">
+                    Eleganzo<br>Selection.
+                </h2>
+            </div>
+
+            <p class="section-desc">
+                Товары, которые мы выделяем отдельно.
+                Минимализм, качество и технологии
+                без лишнего.
+            </p>
+
+        </div>
+
+        <div class="promo reveal">
+
+            <div class="promo-image"></div>
+
+            <div class="promo-content">
+
+                <div class="section-label">
+                    Selected for you
+                </div>
+
+                <div class="promo-title">
+                    ТЕХНОЛОГИИ<br>
+                    С ХАРАКТЕРОМ.
+                </div>
+
+                <p class="promo-text">
+                    Eleganzo.mir — это не просто каталог.
+                    Это подборка вещей, которые хочется
+                    использовать каждый день.
+                </p>
+
+                <a href="#catalog"
+                   class="btn btn-dark">
+                    Открыть каталог →
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================
+     BENEFITS
+===================================== -->
+
+<section class="section" id="about">
+
+    <div class="container">
+
+        <div class="section-head reveal">
+
+            <div>
+                <div class="section-label">
+                    04 / Why us
+                </div>
+
+                <h2 class="section-title">
+                    Почему<br>Eleganzo?
+                </h2>
+            </div>
+
+        </div>
+
+        <div class="benefits">
+
+            <div class="benefit reveal">
+                <div class="benefit-number">01</div>
+                <div class="benefit-title">Отбор</div>
+                <div class="benefit-text">
+                    Мы не превращаем каталог в бесконечный
+                    список. Важные и востребованные позиции
+                    собраны в одном месте.
+                </div>
+            </div>
+
+            <div class="benefit reveal">
+                <div class="benefit-number">02</div>
+                <div class="benefit-title">Удобство</div>
+                <div class="benefit-text">
+                    Заказ с телефона занимает минимум времени.
+                    Выбираете товар, количество и способ доставки.
+                </div>
+            </div>
+
+            <div class="benefit reveal">
+                <div class="benefit-number">03</div>
+                <div class="benefit-title">Доставка</div>
+                <div class="benefit-text">
+                    Стоимость доставки рассчитывается
+                    отдельно в зависимости от региона.
+                </div>
+            </div>
+
+            <div class="benefit reveal">
+                <div class="benefit-number">04</div>
+                <div class="benefit-title">Поддержка</div>
+                <div class="benefit-text">
+                    Если остались вопросы — мы на связи
+                    через WhatsApp и Instagram.
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================
+     INSTAGRAM
+===================================== -->
+
+<section class="section section-dark">
+
+    <div class="container">
+
+        <div class="section-head reveal">
+
+            <div>
+                <div class="section-label">
+                    05 / Follow us
+                </div>
+
+                <h2 class="section-title">
+                    @Eleganzo_mir
+                </h2>
+            </div>
+
+            <a
+                href="https://www.instagram.com/Eleganzo_mir/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn-outline">
+                Instagram ↗
+            </a>
+
+        </div>
+
+        <div class="instagram-grid">
+
+            <a class="insta reveal"
+               href="https://www.instagram.com/Eleganzo_mir/"
+               target="_blank">
+                <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=700&q=85">
+            </a>
+
+            <a class="insta reveal"
+               href="https://www.instagram.com/Eleganzo_mir/"
+               target="_blank">
+                <img src="https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=700&q=85">
+            </a>
+
+            <a class="insta reveal"
+               href="https://www.instagram.com/Eleganzo_mir/"
+               target="_blank">
+                <img src="https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?auto=format&fit=crop&w=700&q=85">
+            </a>
+
+            <a class="insta reveal"
+               href="https://www.instagram.com/Eleganzo_mir/"
+               target="_blank">
+                <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=700&q=85">
+            </a>
+
+            <a class="insta reveal"
+               href="https://www.instagram.com/Eleganzo_mir/"
+               target="_blank">
+                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=700&q=85">
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================
+     FOOTER
+===================================== -->
+
+<footer class="footer" id="contacts">
+
+    <div class="container">
+
+        <div class="footer-top">
+
+            <div class="footer-main">
+
+                <div class="footer-logo">
+                    ELEGANZO<span>.MIR</span>
+                </div>
+
+                <p class="footer-desc">
+                    Премиальная витрина техники,
+                    электроники и товаров для современной жизни.
+                </p>
+
+                <div style="margin-top:28px;">
+
+                    <div style="color:#77776f;font-size:10px;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">
+                        Бишкек / Кыргызстан
+                    </div>
+
+                    <a href="tel:0706280023"
+                       style="color:#fff;font-size:14px;">
+                        0706 280 023
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div>
+
+                <div class="footer-title">
+                    Навигация
+                </div>
+
+                <a href="#catalog">Каталог</a>
+                <a href="#categories">Категории</a>
+                <a href="#selection">Selection</a>
+                <a href="#about">О нас</a>
+
+            </div>
+
+            <div>
+
+                <div class="footer-title">
+                    Категории
+                </div>
+
+                <a href="#catalog" onclick="setCategory('electronics')">
+                    Электроника
+                </a>
+
+                <a href="#catalog" onclick="setCategory('drones')">
+                    Дроны
+                </a>
+
+                <a href="#catalog" onclick="setCategory('tools')">
+                    Инструменты
+                </a>
+
+                <a href="#catalog" onclick="setCategory('home')">
+                    Для дома
+                </a>
+
+                <a href="#catalog" onclick="setCategory('children')">
+                    Для детей
+                </a>
+
+            </div>
+
+            <div class="footer-contact-column">
+
+                <div class="footer-title">
+                    Контакты
+                </div>
+
+                <div class="footer-contact">
+
+                    <a href="tel:0706280023">
+                        📞 0706 280 023
+                    </a>
+
+                    <a
+                        href="https://www.instagram.com/Eleganzo_mir/"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        📸 @Eleganzo_mir
+                    </a>
+
+                    <a
+                        href="https://wa.me/996706280023"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        💬 WhatsApp
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+
+            <div>
+                © 2026 Eleganzo.mir
+            </div>
+
+            <div>
+                Premium Store / Kyrgyzstan
+            </div>
+
+        </div>
+
+    </div>
+
+</footer>
+
+<!-- =====================================
+     OVERLAY
+===================================== -->
+
+<div class="overlay"
+     id="overlay"
+     onclick="closeAllPanels()">
+</div>
+
+<!-- =====================================
+     CART
+===================================== -->
+
+<aside class="cart" id="cart">
+
+    <div class="cart-head">
+
+        <div class="cart-title">
+            Корзина
+        </div>
+
+        <button class="close"
+                onclick="closeCart()">
+            ×
+        </button>
+
+    </div>
+
+    <div class="cart-items"
+         id="cartItems">
+    </div>
+
+    <div class="cart-total">
+
+        <div class="total-row">
+            <span>Товары</span>
+            <strong id="cartSubtotal">0 сом</strong>
+        </div>
+
+        <div class="total-row">
+            <span>Доставка</span>
+            <strong id="cartDelivery">Рассчитаем</strong>
+        </div>
+
+        <div class="total-row big">
+            <span>Итого</span>
+            <strong id="cartTotal">0 сом</strong>
+        </div>
+
+        <button class="checkout-btn"
+                onclick="openCheckout()">
+            Оформить заказ →
+        </button>
+
+    </div>
+
+</aside>
+
+<!-- =====================================
+     PRODUCT MODAL
+===================================== -->
+
+<div class="modal" id="productModal">
+
+    <div class="modal-box product-modal">
+
+        <div class="modal-product-image">
+            <img id="modalImage" src="">
+        </div>
+
+        <div class="modal-product-info">
+
+            <button class="close modal-close"
+                    onclick="closeProductModal()">
+                ×
+            </button>
+
+            <div class="modal-category"
+                 id="modalCategory">
+            </div>
+
+            <h2 class="modal-product-name"
+                id="modalName">
+            </h2>
+
+            <div class="modal-price"
+                 id="modalPrice">
+            </div>
+
+            <p class="modal-description"
+               id="modalDescription">
+            </p>
+
+            <div id="variantSection">
+
+                <div class="variant-title">
+                    Вариант
+                </div>
+
+                <div class="variants"
+                     id="variants">
+                </div>
+
+            </div>
+
+            <div class="modal-qty">
+
+                <button onclick="changeModalQty(-1)">
+                    −
+                </button>
+
+                <span id="modalQty">
+                    1
+                </span>
+
+                <button onclick="changeModalQty(1)">
+                    +
+                </button>
+
+            </div>
+
+            <button class="modal-add"
+                    onclick="addModalProduct()">
+                Добавить в корзину
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =====================================
+     CHECKOUT MODAL
+===================================== -->
+
+<div class="modal" id="checkoutModal">
+
+    <div class="checkout-box">
+
+        <button class="close modal-close"
+                onclick="closeCheckout()">
+            ×
+        </button>
+
+        <div class="checkout-title">
+            Оформление заказа
+        </div>
+
+        <div class="checkout-subtitle">
+            Заполните данные для доставки
+        </div>
+
+        <form id="checkoutForm"
+              onsubmit="submitOrder(event)">
+
+            <div class="form-grid">
+
+                <div class="field">
+
+                    <label>
+                        Имя
+                    </label>
+
+                    <input
+                        id="customerName"
+                        type="text"
+                        required
+                        placeholder="Ваше имя">
+
+                </div>
+
+                <div class="field">
+
+                    <label>
+                        Телефон
+                    </label>
+
+                    <input
+                        id="customerPhone"
+                        type="tel"
+                        required
+                        placeholder="+996">
+
+                </div>
+
+                <div class="field">
+
+                    <label>
+                        Область
+                    </label>
+
+                    <select id="region"
+                            required
+                            onchange="calculateDelivery()">
+
+                        <option value="">
+                            Выберите область
+                        </option>
+
+                        <option value="bishkek">
+                            Бишкек
+                        </option>
+
+                        <option value="chuy">
+                            Чуйская область
+                        </option>
+
+                        <option value="osh">
+                            Ошская область
+                        </option>
+
+                        <option value="other">
+                            Другая область
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="field">
+
+                    <label>
+                        Город / район
+                    </label>
+
+                    <input
+                        id="city"
+                        type="text"
+                        required
+                        placeholder="Город">
+
+                </div>
+
+                <div class="field full">
+
+                    <label>
+                        Адрес
+                    </label>
+
+                    <textarea
+                        id="address"
+                        required
+                        placeholder="Улица, дом, квартира..."></textarea>
+
+                </div>
+
+            </div>
+
+            <div class="delivery-box">
+
+                <div class="delivery-row">
+                    <span>Товары</span>
+                    <strong id="checkoutProducts">
+                        0 сом
+                    </strong>
+                </div>
+
+                <div class="delivery-row">
+                    <span>Доставка</span>
+                    <strong id="checkoutDelivery">
+                        Выберите область
+                    </strong>
+                </div>
+
+                <div class="delivery-row"
+                     style="margin-top:15px;font-size:17px;">
+                    <span>Сейчас к оплате</span>
+                    <strong id="checkoutNow">
+                        0 сом
+                    </strong>
+                </div>
+
+                <div style="margin-top:12px;font-size:10px;color:#888;">
+                    Товар оплачивается при получении.
+                </div>
+
+            </div>
+
+            <div class="payment">
+
+                <div class="payment-title">
+                    Оплата доставки через MBANK
+                </div>
+
+                <div class="mbank">
+
+                    <div class="qr">
+
+                        <img
+                            id="mbankQr"
+                            src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=MBANK%200706280023"
+                            alt="MBANK QR">
+
+                    </div>
+
+                    <div class="mbank-info">
+
+                        <strong style="color:#111;">
+                            MBANK
+                        </strong>
+
+                        <br>
+
+                        Номер получателя:
+                        <strong style="color:#111;">
+                            0706 280 023
+                        </strong>
+
+                        <br><br>
+
+                        После оплаты доставки
+                        загрузите чек ниже.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="receipt">
+
+                <div class="field">
+
+                    <label>
+                        Чек об оплате доставки
+                    </label>
+
+                    <input
+                        type="file"
+                        id="receipt"
+                        accept="image/jpeg,image/png,image/webp,application/pdf"
+                        required>
+
+                </div>
+
+                <div id="receiptError"
+                     style="display:none;color:#a5483c;font-size:11px;margin-top:8px;">
+                </div>
+
+            </div>
+
+            <button
+                type="submit"
+                class="order-submit"
+                id="orderSubmit">
+
+                Подтвердить заказ →
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- =====================================
+     SUCCESS MODAL
+===================================== -->
+
+<div class="modal" id="successModal">
+
+    <div class="modal-box">
+
+        <div class="success">
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <h2>
+                Заказ принят.
+            </h2>
+
+            <p>
+                Номер вашего заказа:
+                <strong id="orderNumber"></strong>
+            </p>
+
+            <p>
+                Мы проверим оплату доставки
+                и свяжемся с вами по указанному телефону.
+            </p>
+
+            <button class="btn"
+                    style="background:#11110f;color:#fff;margin-top:30px;"
+                    onclick="closeSuccess()">
+                Вернуться в магазин
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =====================================
+     MOBILE MENU
+===================================== -->
+
+<div class="modal" id="mobileMenu">
+
+    <div class="modal-box"
+         style="background:#11110f;color:#fff;padding:50px 30px;">
+
+        <button class="close modal-close"
+                style="background:#222;color:#fff;"
+                onclick="closeMobileMenu()">
+            ×
+        </button>
+
+        <div style="font-family:'Playfair Display';font-size:38px;">
+            ELEGANZO<span style="color:#c7ad7b">.MIR</span>
+        </div>
+
+        <div style="margin-top:50px;">
+
+            <a href="#catalog"
+               onclick="closeMobileMenu()"
+               style="display:block;font-size:22px;margin-bottom:25px;">
+                Каталог
+            </a>
+
+            <a href="#categories"
+               onclick="closeMobileMenu()"
+               style="display:block;font-size:22px;margin-bottom:25px;">
+                Категории
+            </a>
+
+            <a href="#selection"
+               onclick="closeMobileMenu()"
+               style="display:block;font-size:22px;margin-bottom:25px;">
+                Selection
+            </a>
+
+            <a href="#about"
+               onclick="closeMobileMenu()"
+               style="display:block;font-size:22px;margin-bottom:25px;">
+                О нас
+            </a>
+
+            <a href="https://wa.me/996706280023"
+               target="_blank"
+               style="display:block;font-size:22px;color:#c7ad7b;">
+                WhatsApp →
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =====================================
+     TOAST
+===================================== -->
+
+<div class="toast" id="toast">
+    Товар добавлен в корзину
+</div>
+
+<!-- =====================================
+     WHATSAPP
+===================================== -->
+
+<a
+    href="https://wa.me/996706280023?text=Здравствуйте!%20Хочу%20узнать%20подробнее%20о%20товарах%20Eleganzo.mir."
+    class="whatsapp-float"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Написать в WhatsApp"
+    title="Написать в WhatsApp">
+
+    <svg
+        class="whatsapp-icon"
+        viewBox="0 0 24 24"
+        aria-hidden="true">
+
+        <path d="M20.5 3.5A11.8 11.8 0 0 0 12.05 0C5.48 0 .14 5.34.14 11.91c0 2.1.55 4.15 1.6 5.95L0 24l6.3-1.65a11.9 11.9 0 0 0 5.74 1.46h.01c6.56 0 11.9-5.34 11.9-11.9 0-3.18-1.23-6.17-3.45-8.41ZM12.05 21.8h-.01a9.9 9.9 0 0 1-5.04-1.38l-.36-.21-3.74.98 1-3.65-.23-.38a9.87 9.87 0 0 1-1.52-5.25C2.15 6.45 6.59 2 12.05 2c2.64 0 5.12 1.03 6.98 2.9a9.83 9.83 0 0 1 2.88 7.01c0 5.46-4.44 9.89-9.86 9.89Zm5.42-7.41c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.47-.89-.79-1.49-1.76-1.66-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35Z"/>
+
+    </svg>
+
+</a>
+
+<script>
+
+/* =====================================
+   CONFIG
+===================================== */
+
+const CONFIG = {
+
+    storeName: "Eleganzo.mir",
+
+    phone: "0706280023",
+
+    whatsapp: "996706280023",
+
+    instagram: "https://www.instagram.com/Eleganzo_mir/",
+
+    mbankNumber: "0706280023",
+
+    currency: "сом",
+
+    delivery: {
+        bishkek: 150,
+        chuy: 250,
+        osh: 400,
+        other: 500
+    }
+
+};
+
+
+/* =====================================
+   PRODUCTS
+===================================== */
+
+let products = [];
+
+let productsLoaded = false;
+
+
+/* =====================================
+   STATE
+===================================== */
+
+let cart = JSON.parse(localStorage.getItem("eleganzo_cart") || "[]");
+
+let currentCategory = "all";
+
+let currentProduct = null;
+
+let modalQty = 1;
+
+let selectedVariant = null;
+
+let checkoutInProgress = false;
+
+
+/* =====================================
+   INIT
+===================================== */
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+    setTimeout(()=>{
+
+        document
+            .getElementById("loader")
+            .classList.add("hide");
+
+    },900);
+
+    loadProducts();
+
+    renderCart();
+
+    updateCartCount();
+
+    initReveal();
+
+    window.addEventListener("scroll",handleScroll);
+
+    window.addEventListener("online",()=>{
+        document
+            .getElementById("offlineBar")
+            .classList.remove("show");
+    });
+
+    window.addEventListener("offline",()=>{
+        document
+            .getElementById("offlineBar")
+            .classList.add("show");
+    });
+
+});
+
+
+/* =====================================
+   LOAD PRODUCTS FROM products.json
+===================================== */
+
+async function loadProducts(){
+
+    try{
+
+        const response = await fetch("/products.json", {
+            cache: "no-store"
+        });
+
+        if(!response.ok){
+            throw new Error("Не удалось загрузить товары");
+        }
+
+        const data = await response.json();
+
+        products = Array.isArray(data)
+            ? data
+                .filter(product => product && product.active !== false)
+                .map(product => ({
+                    ...product,
+                    categoryName: product.categoryName || product.category || "Без категории",
+                    category: product.category || "other",
+                    badge: product.badge || "",
+                    variants: Array.isArray(product.variants) ? product.variants : [],
+                    description: product.description || "",
+                    image: product.image || ""
+                }))
+            : [];
+
+        productsLoaded = true;
+        renderProducts();
+
+    }catch(error){
+
+        console.error("Eleganzo.mir products error:", error);
+
+        products = [];
+        productsLoaded = false;
+        renderProducts();
+
+    }
+
+}
+
+
+/* =====================================
+   HEADER SCROLL
+===================================== */
+
+function handleScroll(){
+
+    const header = document.getElementById("header");
+
+    if(window.scrollY > 40){
+        header.classList.add("scrolled");
+    }else{
+        header.classList.remove("scrolled");
+    }
+
+}
+
+
+/* =====================================
+   REVEAL
+===================================== */
+
+function initReveal(){
+
+    const items = document.querySelectorAll(".reveal");
+
+    const observer = new IntersectionObserver(entries=>{
+
+        entries.forEach(entry=>{
+
+            if(entry.isIntersecting){
+
+                entry.target.classList.add("visible");
+
+                observer.unobserve(entry.target);
+
+            }
+
+        });
+
+    },{
+        threshold:.08
+    });
+
+    items.forEach(item=>observer.observe(item));
+
+}
+
+
+/* =====================================
+   RENDER PRODUCTS
+===================================== */
+
+function renderProducts(){
+
+    const container = document.getElementById("products");
+
+    if(!container) return;
+
+    if(!productsLoaded){
+        container.innerHTML = `
+            <div style="
+                grid-column:1/-1;
+                padding:100px 20px;
+                text-align:center;
+                color:#888;
+            ">
+                <div style="
+                    font-family:'Playfair Display';
+                    font-size:35px;
+                    color:#111;
+                ">
+                    Загружаем товары...
+                </div>
+            </div>
+        `;
+        return;
+    }
+
+    let list = [...products];
+
+    if(currentCategory !== "all"){
+        list = list.filter(
+            p => p.category === currentCategory
+        );
+    }
+
+    const search =
+        document
+        .getElementById("searchInput")
+        ?.value
+        .trim()
+        .toLowerCase();
+
+    if(search){
+
+        list = list.filter(p=>
+
+            p.name.toLowerCase().includes(search) ||
+
+            p.categoryName.toLowerCase().includes(search)
+
+        );
+
+    }
+
+    if(!list.length){
+
+        container.innerHTML = `
+
+            <div style="
+                grid-column:1/-1;
+                padding:100px 20px;
+                text-align:center;
+                color:#888;
+            ">
+
+                <div style="
+                    font-family:'Playfair Display';
+                    font-size:35px;
+                    color:#111;
+                ">
+                    Ничего не найдено
+                </div>
+
+                <div style="margin-top:10px;font-size:12px;">
+                    Попробуйте изменить запрос.
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+    container.innerHTML = list.map(product=>`
+
+        <article class="product reveal visible">
+
+            <div class="product-image">
+
+                ${product.badge
+                    ? `<div class="product-badge ${product.badge === "Premium" ? "gold":""}">
+                        ${product.badge}
+                       </div>`
+                    : ""
+                }
+
+                <div class="product-actions">
+
+                    <button
+                        class="product-action"
+                        onclick='openProduct(${JSON.stringify(product.id)})'
+                        aria-label="Открыть">
+
+                        <svg viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="1.5">
+                            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+
+                    </button>
+
+                    <button
+                        class="product-action"
+                        onclick="quickAdd(${product.id})"
+                        aria-label="Добавить">
+
+                        <svg viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="1.5">
+                            <path d="M12 5v14M5 12h14"/>
+                        </svg>
+
+                    </button>
+
+                </div>
+
+                <img
+                    src="${product.image}"
+                    alt="${product.name}"
+                    loading="lazy">
+
+            </div>
+
+            <div class="product-info">
+
+                <div class="product-category">
+                    ${product.categoryName}
+                </div>
+
+                <div class="product-name">
+                    ${product.name}
+                </div>
+
+                <div class="product-bottom">
+
+                    <div class="product-price">
+                        ${formatMoney(product.price)}
+                    </div>
+
+                    <div class="product-stock ${product.stock <= 0 ? "out":""}">
+                        ${product.stock > 0
+                            ? "В наличии"
+                            : "Нет в наличии"
+                        }
+                    </div>
+
+                </div>
+
+                <button
+                    class="add-cart"
+                    onclick="quickAdd(${product.id})"
+                    ${product.stock <= 0 ? "disabled":""}>
+
+                    ${product.stock > 0
+                        ? "Добавить в корзину"
+                        : "Нет в наличии"
+                    }
+
+                </button>
+
+            </div>
+
+        </article>
+
+    `).join("");
+
+}
+
+
+/* =====================================
+   MONEY
+===================================== */
+
+function formatMoney(value){
+
+    return new Intl.NumberFormat("ru-RU")
+        .format(value)
+        + " сом";
+
+}
+
+
+/* =====================================
+   CATEGORY
+===================================== */
+
+function setCategory(category){
+
+    currentCategory = category;
+
+    document
+        .querySelectorAll(".filter")
+        .forEach(button=>{
+
+            button.classList.toggle(
+                "active",
+                button.dataset.category === category
+            );
+
+        });
+
+    renderProducts();
+
+    document
+        .getElementById("catalog")
+        .scrollIntoView({
+            behavior:"smooth"
+        });
+
+}
+
+
+/* =====================================
+   SEARCH
+===================================== */
+
+function handleSearch(value){
+
+    renderProducts();
+
+}
+
+
+function openSearch(){
+
+    document
+        .getElementById("searchArea")
+        .scrollIntoView({
+            behavior:"smooth"
+        });
+
+    setTimeout(()=>{
+
+        document
+            .getElementById("searchInput")
+            .focus();
+
+    },500);
+
+}
+
+
+/* =====================================
+   SORT
+===================================== */
+
+function sortProducts(type){
+
+    let list = [...products];
+
+    if(type === "priceLow"){
+        list.sort((a,b)=>a.price-b.price);
+    }
+
+    if(type === "priceHigh"){
+        list.sort((a,b)=>b.price-a.price);
+    }
+
+    if(type === "name"){
+        list.sort((a,b)=>a.name.localeCompare(b.name));
+    }
+
+    const container =
+        document.getElementById("products");
+
+    container.innerHTML = list.map(product=>`
+
+        <article class="product reveal visible">
+
+            <div class="product-image">
+
+                ${product.badge
+                    ? `<div class="product-badge">
+                        ${product.badge}
+                       </div>`
+                    : ""
+                }
+
+                <div class="product-actions">
+
+                    <button
+                        class="product-action"
+                        onclick='openProduct(${JSON.stringify(product.id)})'>
+                        ↗
+                    </button>
+
+                </div>
+
+                <img
+                    src="${product.image}"
+                    alt="${product.name}"
+                    loading="lazy">
+
+            </div>
+
+            <div class="product-info">
+
+                <div class="product-category">
+                    ${product.categoryName}
+                </div>
+
+                <div class="product-name">
+                    ${product.name}
+                </div>
+
+                <div class="product-bottom">
+
+                    <div class="product-price">
+                        ${formatMoney(product.price)}
+                    </div>
+
+                    <div class="product-stock">
+                        ${product.stock > 0
+                            ? "В наличии"
+                            : "Нет в наличии"
+                        }
+                    </div>
+
+                </div>
+
+                <button
+                    class="add-cart"
+                    onclick="quickAdd(${product.id})">
+
+                    Добавить в корзину
+
+                </button>
+
+            </div>
+
+        </article>
+
+    `).join("");
+
+}
+
+
+/* =====================================
+   PRODUCT MODAL
+===================================== */
+
+function openProduct(id){
+
+    const product =
+        products.find(p=>p.id===id);
+
+    if(!product) return;
+
+    currentProduct = product;
+
+    modalQty = 1;
+
+    selectedVariant =
+        product.variants?.[0] || null;
+
+    document.getElementById("modalImage").src =
+        product.image;
+
+    document.getElementById("modalName").textContent =
+        product.name;
+
+    document.getElementById("modalCategory").textContent =
+        product.categoryName;
+
+    document.getElementById("modalPrice").textContent =
+        formatMoney(product.price);
+
+    document.getElementById("modalDescription").textContent =
+        product.description;
+
+    document.getElementById("modalQty").textContent =
+        modalQty;
+
+    const variants =
+        document.getElementById("variants");
+
+    const section =
+        document.getElementById("variantSection");
+
+    if(product.variants?.length){
+
+        section.style.display="block";
+
+        variants.innerHTML =
+            product.variants.map((variant,index)=>`
+
+                <button
+                    class="variant ${index===0 ? "active":""}"
+                    onclick="selectVariant(this,'${variant.replace(/'/g,"\\'")}')">
+
+                    ${variant}
+
+                </button>
+
+            `).join("");
+
+    }else{
+
+        section.style.display="none";
+
+    }
+
+    openModal("productModal");
+
+}
+
+
+function selectVariant(button,variant){
+
+    document
+        .querySelectorAll(".variant")
+        .forEach(item=>
+            item.classList.remove("active")
+        );
+
+    button.classList.add("active");
+
+    selectedVariant = variant;
+
+}
+
+
+function changeModalQty(amount){
+
+    if(!currentProduct) return;
+
+    modalQty += amount;
+
+    if(modalQty < 1)
+        modalQty = 1;
+
+    if(modalQty > currentProduct.stock)
+        modalQty = currentProduct.stock;
+
+    document.getElementById("modalQty").textContent =
+        modalQty;
+
+}
+
+
+function addModalProduct(){
+
+    if(!currentProduct) return;
+
+    addToCart(
+        currentProduct.id,
+        modalQty,
+        selectedVariant
+    );
+
+    closeProductModal();
+
+}
+
+
+function quickAdd(id){
+
+    const product =
+        products.find(p=>p.id===id);
+
+    if(!product || product.stock<=0)
+        return;
+
+    addToCart(
+        product.id,
+        1,
+        product.variants?.[0] || null
+    );
+
+}
+
+
+/* =====================================
+   CART
+===================================== */
+
+function addToCart(id,quantity=1,variant=null){
+
+    const product =
+        products.find(p=>p.id===id);
+
+    if(!product) return;
+
+    if(quantity > product.stock){
+
+        showToast("Недостаточно товара на складе");
+
+        return;
+
+    }
+
+    const key =
+        `${id}_${variant || "standard"}`;
+
+    const existing =
+        cart.find(item=>item.key===key);
+
+    if(existing){
+
+        existing.quantity += quantity;
+
+        if(existing.quantity > product.stock){
+
+            existing.quantity = product.stock;
+
+            showToast("Достигнуто максимальное количество");
+
+        }
+
+    }else{
+
+        cart.push({
+
+            key,
+
+            id,
+
+            quantity,
+
+            variant
+
+        });
+
+    }
+
+    saveCart();
+
+    renderCart();
+
+    updateCartCount();
+
+    showToast("Товар добавлен в корзину");
+
+}
+
+
+function saveCart(){
+
+    localStorage.setItem(
+        "eleganzo_cart",
+        JSON.stringify(cart)
+    );
+
+}
+
+
+function updateCartCount(){
+
+    const count =
+        cart.reduce(
+            (sum,item)=>sum + item.quantity,
+            0
+        );
+
+    document.getElementById("cartCount")
+        .textContent = count;
+
+}
+
+
+/* =====================================
+   CART RENDER
+===================================== */
+
+function renderCart(){
+
+    const container =
+        document.getElementById("cartItems");
+
+    if(!cart.length){
+
+        container.innerHTML = `
+
+            <div class="empty-cart">
+
+                <div class="empty-cart-title">
+                    Корзина пуста
+                </div>
+
+                <p>
+                    Добавьте товары, которые вам понравились.
+                </p>
+
+            </div>
+
+        `;
+
+        document.getElementById("cartSubtotal")
+            .textContent="0 сом";
+
+        document.getElementById("cartTotal")
+            .textContent="0 сом";
+
+        return;
+
+    }
+
+    let subtotal = 0;
+
+    container.innerHTML =
+        cart.map(item=>{
+
+            const product =
+                products.find(p=>p.id===item.id);
+
+            if(!product) return "";
+
+            const itemTotal =
+                product.price * item.quantity;
+
+            subtotal += itemTotal;
+
+            return `
+
+                <div class="cart-item">
+
+                    <div class="cart-item-image">
+
+                        <img
+                            src="${product.image}"
+                            alt="${product.name}">
+
+                    </div>
+
+                    <div>
+
+                        <div class="cart-item-name">
+                            ${product.name}
+                        </div>
+
+                        <div class="cart-item-variant">
+                            ${item.variant || "Standard"}
+                        </div>
+
+                        <div class="cart-item-price">
+                            ${formatMoney(itemTotal)}
+                        </div>
+
+                        <div class="qty">
+
+                            <button
+                                onclick="changeCartQty('${item.key}',-1)">
+                                −
+                            </button>
+
+                            <span>
+                                ${item.quantity}
+                            </span>
+
+                            <button
+                                onclick="changeCartQty('${item.key}',1)">
+                                +
+                            </button>
+
+                        </div>
+
+                        <div
+                            class="remove-item"
+                            onclick="removeCartItem('${item.key}')">
+
+                            Удалить
+
+                        </div>
+
+                    </div>
+
+                    <div></div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+    document.getElementById("cartSubtotal")
+        .textContent = formatMoney(subtotal);
+
+    document.getElementById("cartTotal")
+        .textContent = formatMoney(subtotal);
+
+}
+
+
+function changeCartQty(key,amount){
+
+    const item =
+        cart.find(item=>item.key===key);
+
+    if(!item) return;
+
+    const product =
+        products.find(p=>p.id===item.id);
+
+    item.quantity += amount;
+
+    if(item.quantity < 1){
+
+        removeCartItem(key);
+
+        return;
+
+    }
+
+    if(item.quantity > product.stock){
+
+        item.quantity = product.stock;
+
+        showToast("Недостаточно товара");
+
+    }
+
+    saveCart();
+
+    renderCart();
+
+    updateCartCount();
+
+}
+
+
+function removeCartItem(key){
+
+    cart =
+        cart.filter(item=>item.key!==key);
+
+    saveCart();
+
+    renderCart();
+
+    updateCartCount();
+
+}
+
+
+/* =====================================
+   OPEN CART
+===================================== */
+
+function openCart(){
+
+    document
+        .getElementById("cart")
+        .classList.add("active");
+
+    document
+        .getElementById("overlay")
+        .classList.add("active");
+
+}
+
+
+function closeCart(){
+
+    document
+        .getElementById("cart")
+        .classList.remove("active");
+
+    document
+        .getElementById("overlay")
+        .classList.remove("active");
+
+}
+
+
+/* =====================================
+   CHECKOUT
+===================================== */
+
+function openCheckout(){
+
+    if(!cart.length){
+
+        showToast("Сначала добавьте товар в корзину");
+
+        return;
+
+    }
+
+    closeCart();
+
+    document
+        .getElementById("checkoutModal")
+        .classList.add("active");
+
+    document.body.classList.add("modal-open");
+
+    calculateDelivery();
+
+}
+
+
+function closeCheckout(){
+
+    document
+        .getElementById("checkoutModal")
+        .classList.remove("active");
+
+    document.body.classList.remove("modal-open");
+
+}
+
+
+/* =====================================
+   DELIVERY
+===================================== */
+
+function calculateDelivery(){
+
+    let subtotal = 0;
+
+    cart.forEach(item=>{
+
+        const product =
+            products.find(p=>p.id===item.id);
+
+        if(product){
+            subtotal +=
+                product.price * item.quantity;
+        }
+
+    });
+
+    const region =
+        document.getElementById("region").value;
+
+    let delivery = 0;
+
+    if(region && CONFIG.delivery[region]){
+        delivery = CONFIG.delivery[region];
+    }
+
+    document.getElementById("checkoutProducts")
+        .textContent =
+        formatMoney(subtotal);
+
+    document.getElementById("checkoutDelivery")
+        .textContent =
+        region
+            ? formatMoney(delivery)
+            : "Выберите область";
+
+    document.getElementById("checkoutNow")
+        .textContent =
+        region
+            ? formatMoney(delivery)
+            : "0 сом";
+
+    document.getElementById("cartDelivery")
+        .textContent =
+        region
+            ? formatMoney(delivery)
+            : "Рассчитаем";
+
+    document.getElementById("cartTotal")
+        .textContent =
+        formatMoney(subtotal + delivery);
+
+}
+
+
+/* =====================================
+   SUBMIT ORDER
+===================================== */
+
+async function submitOrder(event){
+
+    event.preventDefault();
+
+    if(checkoutInProgress)
+        return;
+
+    if(!cart.length){
+
+        showToast("Корзина пуста");
+
+        return;
+
+    }
+
+    const receipt =
+        document.getElementById("receipt");
+
+    const receiptError =
+        document.getElementById("receiptError");
+
+    receiptError.style.display="none";
+
+    if(!receipt.files.length){
+
+        receiptError.textContent =
+            "Загрузите чек об оплате доставки.";
+
+        receiptError.style.display="block";
+
+        return;
+
+    }
+
+    const file =
+        receipt.files[0];
+
+    const allowed = [
+        "image/jpeg",
+        "image/png",
+        "image/webp",
+        "application/pdf"
+    ];
+
+    if(!allowed.includes(file.type)){
+
+        receiptError.textContent =
+            "Допустимы JPG, PNG, WEBP или PDF.";
+
+        receiptError.style.display="block";
+
+        return;
+
+    }
+
+    if(file.size > 10 * 1024 * 1024){
+
+        receiptError.textContent =
+            "Размер файла не должен превышать 10 МБ.";
+
+        receiptError.style.display="block";
+
+        return;
+
+    }
+
+    const region =
+        document.getElementById("region").value;
+
+    if(!region){
+
+        showToast("Выберите область");
+
+        return;
+
+    }
+
+    checkoutInProgress = true;
+
+    const button =
+        document.getElementById("orderSubmit");
+
+    button.disabled = true;
+
+    button.textContent =
+        "Отправляем заказ...";
+
+    /*
+       Здесь в production должен быть запрос
+       в Supabase / API.
+
+       Например:
+
+       await fetch("/api/orders", {
+           method:"POST",
+           body:formData
+       });
+
+       В этой версии сохраняем заказ
+       локально для демонстрации.
+    */
+
+    await new Promise(
+        resolve => setTimeout(resolve,1500)
+    );
+
+    const orderNumber =
+        "EL-" +
+        new Date().getFullYear() +
+        "-" +
+        Math.floor(
+            100000 + Math.random()*900000
+        );
+
+    const order = {
+
+        number:orderNumber,
+
+        createdAt:new Date().toISOString(),
+
+        customer:{
+
+            name:
+                document.getElementById("customerName").value,
+
+            phone:
+                document.getElementById("customerPhone").value,
+
+            region,
+
+            city:
+                document.getElementById("city").value,
+
+            address:
+                document.getElementById("address").value
+
+        },
+
+        items:[...cart],
+
+        delivery:
+            CONFIG.delivery[region],
+
+        status:
+            "ОЖИДАЕТ ПРОВЕРКИ ОПЛАТЫ ДОСТАВКИ"
+
+    };
+
+    localStorage.setItem(
+        "last_eleganzo_order",
+        JSON.stringify(order)
+    );
+
+    cart = [];
+
+    saveCart();
+
+    renderCart();
+
+    updateCartCount();
+
+    document
+        .getElementById("checkoutModal")
+        .classList.remove("active");
+
+    document
+        .getElementById("orderNumber")
+        .textContent = orderNumber;
+
+    document
+        .getElementById("successModal")
+        .classList.add("active");
+
+    button.disabled = false;
+
+    button.textContent =
+        "Подтвердить заказ →";
+
+    checkoutInProgress = false;
+
+}
+
+
+/* =====================================
+   SUCCESS
+===================================== */
+
+function closeSuccess(){
+
+    document
+        .getElementById("successModal")
+        .classList.remove("active");
+
+    document.body.classList.remove("modal-open");
+
+}
+
+
+/* =====================================
+   MODAL HELPERS
+===================================== */
+
+function openModal(id){
+
+    document
+        .getElementById(id)
+        .classList.add("active");
+
+    document.body.classList.add("modal-open");
+
+}
+
+
+function closeProductModal(){
+
+    document
+        .getElementById("productModal")
+        .classList.remove("active");
+
+    document.body.classList.remove("modal-open");
+
+}
+
+
+function closeAllPanels(){
+
+    closeCart();
+
+    closeProductModal();
+
+    closeCheckout();
+
+    closeMobileMenu();
+
+}
+
+
+/* =====================================
+   MOBILE MENU
+===================================== */
+
+function openMobileMenu(){
+
+    openModal("mobileMenu");
+
+}
+
+
+function closeMobileMenu(){
+
+    document
+        .getElementById("mobileMenu")
+        .classList.remove("active");
+
+    document.body.classList.remove("modal-open");
+
+}
+
+
+/* =====================================
+   LANGUAGE
+===================================== */
+
+let language = localStorage.getItem("eleganzo_lang") || "ru";
+
+function toggleLanguage(){
+
+    language =
+        language === "ru"
+            ? "kg"
+            : "ru";
+
+    localStorage.setItem(
+        "eleganzo_lang",
+        language
+    );
+
+    document.getElementById("langButton")
+        .textContent =
+        language.toUpperCase();
+
+    if(language==="kg"){
+
+        showToast(
+            "Кыргыз тили активдештирилди"
+        );
+
+    }else{
+
+        showToast(
+            "Русский язык активирован"
+        );
+
+    }
+
+}
+
+
+/* =====================================
+   TOAST
+===================================== */
+
+let toastTimer;
+
+function showToast(message){
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer =
+        setTimeout(()=>{
+
+            toast.classList.remove("show");
+
+        },2300);
+
+}
+
+
+/* =====================================
+   ESCAPE
+===================================== */
+
+document.addEventListener("keydown",event=>{
+
+    if(event.key==="Escape"){
+
+        closeAllPanels();
+
+    }
+
+});
+
+
+/* =====================================
+   MODAL OUTSIDE CLICK
+===================================== */
+
+document
+    .querySelectorAll(".modal")
+    .forEach(modal=>{
+
+        modal.addEventListener("click",event=>{
+
+            if(event.target === modal){
+
+                modal.classList.remove("active");
+
+                document.body.classList.remove(
+                    "modal-open"
+                );
+
+            }
+
+        });
+
+    });
+
+
+/* =====================================
+   PREVENT DOUBLE CLICK
+===================================== */
+
+document.addEventListener("dblclick",event=>{
+
+    if(
+        event.target.tagName === "BUTTON" ||
+        event.target.closest("button")
+    ){
+
+        event.preventDefault();
+
+    }
+
+});
+
+
+/* =====================================
+   INITIAL LANGUAGE
+===================================== */
+
+document.getElementById("langButton")
+    .textContent =
+    language.toUpperCase();
+
+
+/* =====================================
+   ERROR HANDLING
+===================================== */
+
+window.addEventListener("error",event=>{
+
+    console.log(
+        "Eleganzo error:",
+        event.message
+    );
+
+});
+
+
+/* =====================================
+   IMAGE FALLBACK
+===================================== */
+
+document.addEventListener(
+    "error",
+    event=>{
+
+        if(
+            event.target.tagName === "IMG"
+        ){
+
+            event.target.style.objectFit =
+                "cover";
+
+        }
+
+    },
+    true
+);
+
+</script>
+
+</body>
+</html>

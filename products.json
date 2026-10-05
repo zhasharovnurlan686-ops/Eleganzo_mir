@@ -1,0 +1,13 @@
+[
+  {
+    "id": "demo-001",
+    "name": "Пример товара",
+    "description": "Замените этот товар через админку.",
+    "price": 10000,
+    "oldPrice": null,
+    "stock": 10,
+    "category": "Новинки",
+    "image": "/products/demo-001.jpg",
+    "active": true
+  }
+]

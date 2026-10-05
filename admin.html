@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Eleganzo.mir — Админка</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f5f3;color:#171717;font-family:Arial,sans-serif}
+button,input,textarea,select{font:inherit}button{cursor:pointer}
+.wrap{max-width:1150px;margin:auto;padding:24px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:22px}
+.logo{font-size:24px;font-weight:800;letter-spacing:-1px}.muted{color:#777}
+.card{background:#fff;border:1px solid #ddd;border-radius:18px;padding:20px;box-shadow:0 8px 30px #00000008}
+.login{max-width:420px;margin:12vh auto}.login h1{margin-top:0}
+input,textarea,select{width:100%;padding:12px 13px;border:1px solid #ccc;border-radius:10px;background:#fff;outline:none}
+input:focus,textarea:focus,select:focus{border-color:#111}
+label{display:block;font-size:13px;font-weight:700;margin:13px 0 6px}
+.btn{border:0;border-radius:10px;padding:11px 15px;font-weight:700}.primary{background:#111;color:#fff}.light{background:#eee}.danger{background:#fee;color:#b00}
+.hidden{display:none!important}.toolbar{display:flex;gap:10px;flex-wrap:wrap}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:15px}
+.product{position:relative}.product img{width:100%;height:220px;object-fit:cover;border-radius:12px;background:#eee}.product h3{margin:12px 0 5px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.actions{display:flex;gap:8px;margin-top:13px}
+.status{padding:10px 13px;border-radius:10px;background:#eef7ee;margin-bottom:15px;display:none}.status.show{display:block}
+.modal{position:fixed;inset:0;background:#0008;display:flex;align-items:center;justify-content:center;padding:15px;z-index:20}
+.modal-box{width:min(650px,100%);max-height:92vh;overflow:auto;background:white;border-radius:18px;padding:20px}
+.preview{width:100%;height:220px;object-fit:cover;border-radius:12px;background:#eee;margin-top:10px}
+.switch{display:flex;align-items:center;gap:8px;margin-top:12px}.switch input{width:auto}
+@media(max-width:600px){.wrap{padding:14px}.row{grid-template-columns:1fr}.top{align-items:flex-start}.product img{height:190px}}
+</style>
+</head>
+<body>
+
+<div id="loginScreen" class="wrap">
+  <div class="card login">
+    <h1>Eleganzo.mir</h1>
+    <p class="muted">Панель администратора</p>
+    <label>Пароль администратора</label>
+    <input id="password" type="password" placeholder="Введите пароль">
+    <button class="btn primary" style="width:100%;margin-top:14px" onclick="login()">Войти</button>
+    <p id="loginError" style="color:#b00"></p>
+  </div>
+</div>
+
+<div id="app" class="wrap hidden">
+  <div class="top">
+    <div>
+      <div class="logo">Eleganzo.mir / Admin</div>
+      <div class="muted">Управление товарами</div>
+    </div>
+    <div class="toolbar">
+      <button class="btn light" onclick="location.href='/'">Открыть сайт</button>
+      <button class="btn light" onclick="logout()">Выйти</button>
+    </div>
+  </div>
+
+  <div id="status" class="status"></div>
+
+  <div class="card" style="margin-bottom:15px">
+    <div class="toolbar">
+      <button class="btn primary" onclick="openNew()">+ Добавить товар</button>
+      <button class="btn light" onclick="loadProducts()">Обновить</button>
+    </div>
+  </div>
+
+  <div id="products" class="grid"></div>
+</div>
+
+<div id="modal" class="modal hidden">
+  <div class="modal-box">
+    <div class="top">
+      <h2 id="modalTitle">Товар</h2>
+      <button class="btn light" onclick="closeModal()">✕</button>
+    </div>
+
+    <input id="id" type="hidden">
+
+    <label>Название</label>
+    <input id="name" placeholder="Например: DJI Mini 4 Pro">
+
+    <label>Описание</label>
+    <textarea id="description" rows="3" placeholder="Описание товара"></textarea>
+
+    <div class="row">
+      <div>
+        <label>Цена, сом</label>
+        <input id="price" type="number" min="0">
+      </div>
+      <div>
+        <label>Старая цена, сом</label>
+        <input id="oldPrice" type="number" min="0" placeholder="Необязательно">
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <label>Количество</label>
+        <input id="stock" type="number" min="0">
+      </div>
+      <div>
+        <label>Категория</label>
+        <input id="category" placeholder="Электроника">
+      </div>
+    </div>
+
+    <label>Фото</label>
+    <input id="imageFile" type="file" accept="image/png,image/jpeg,image/webp">
+    <img id="preview" class="preview hidden">
+
+    <label>Путь к фото</label>
+    <input id="image" placeholder="/products/photo.jpg">
+
+    <label class="switch">
+      <input id="active" type="checkbox" checked>
+      Показывать товар на сайте
+    </label>
+
+    <div class="actions">
+      <button class="btn primary" style="flex:1" onclick="saveProduct()">Сохранить</button>
+      <button id="deleteBtn" class="btn danger hidden" onclick="deleteProduct()">Удалить</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let products = [];
+let editingId = null;
+
+const $ = id => document.getElementById(id);
+
+async function api(url, options={}) {
+  const res = await fetch(url, {
+    ...options,
+    headers: {'Content-Type':'application/json', ...(options.headers||{})}
+  });
+  const data = await res.json().catch(()=>({}));
+  if (!res.ok) throw new Error(data.error || 'Ошибка');
+  return data;
+}
+
+async function login(){
+  $('loginError').textContent='';
+  try{
+    await api('/api/admin',{
+      method:'POST',
+      body:JSON.stringify({action:'login',password:$('password').value})
+    });
+    $('loginScreen').classList.add('hidden');
+    $('app').classList.remove('hidden');
+    loadProducts();
+  }catch(e){$('loginError').textContent=e.message}
+}
+
+async function logout(){
+  await api('/api/admin',{method:'POST',body:JSON.stringify({action:'logout'})}).catch(()=>{});
+  location.reload();
+}
+
+async function loadProducts(){
+  try{
+    const data=await api('/api/admin');
+    products=data.products || [];
+    render();
+  }catch(e){
+    if(e.message.includes('вход')) location.reload();
+    else showStatus(e.message,true);
+  }
+}
+
+function render(){
+  $('products').innerHTML=products.map(p=>`
+    <div class="card product">
+      <img src="${esc(p.image||'')}" onerror="this.style.opacity='.3'">
+      <h3>${esc(p.name)}</h3>
+      <div><b>${money(p.price)} сом</b>${p.oldPrice?` <s class="muted">${money(p.oldPrice)} сом</s>`:''}</div>
+      <div class="muted" style="margin-top:6px">${esc(p.category||'Без категории')} · Остаток: ${Number(p.stock)||0}</div>
+      <div style="margin-top:7px">${p.active?'🟢 Опубликован':'⚪ Скрыт'}</div>
+      <div class="actions">
+        <button class="btn primary" style="flex:1" onclick="editProduct('${p.id}')">Изменить</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openNew(){
+  editingId=null;
+  $('modalTitle').textContent='Добавить товар';
+  ['id','name','description','price','oldPrice','stock','category','image'].forEach(x=>$(x).value='');
+  $('active').checked=true;
+  $('preview').classList.add('hidden');
+  $('deleteBtn').classList.add('hidden');
+  $('modal').classList.remove('hidden');
+}
+
+function editProduct(id){
+  const p=products.find(x=>x.id===id);
+  if(!p)return;
+  editingId=id;
+  $('modalTitle').textContent='Редактировать товар';
+  $('id').value=p.id;$('name').value=p.name||'';$('description').value=p.description||'';
+  $('price').value=p.price??0;$('oldPrice').value=p.oldPrice??'';$('stock').value=p.stock??0;
+  $('category').value=p.category||'';$('image').value=p.image||'';$('active').checked=p.active!==false;
+  $('preview').src=p.image||'';$('preview').classList.toggle('hidden',!p.image);
+  $('deleteBtn').classList.remove('hidden');
+  $('modal').classList.remove('hidden');
+}
+
+function closeModal(){$('modal').classList.add('hidden')}
+
+async function saveProduct(){
+  try{
+    let image=$('image').value.trim();
+
+    const file=$('imageFile').files[0];
+    if(file){
+      if(file.size>5*1024*1024) throw new Error('Фото должно быть до 5 МБ');
+      const dataUrl=await fileToDataURL(file);
+      showStatus('Загружаю фото...');
+      const uploaded=await api('/api/admin?action=image',{
+        method:'POST',
+        body:JSON.stringify({data:dataUrl,fileName:file.name})
+      });
+      image=uploaded.image;
+    }
+
+    const product={
+      id:editingId || ('p-'+Date.now()),
+      name:$('name').value.trim(),
+      description:$('description').value.trim(),
+      price:Number($('price').value)||0,
+      oldPrice:$('oldPrice').value?Number($('oldPrice').value):null,
+      stock:Number($('stock').value)||0,
+      category:$('category').value.trim()||'Без категории',
+      image,
+      active:$('active').checked
+    };
+
+    if(!product.name) throw new Error('Введите название товара');
+
+    const index=products.findIndex(x=>x.id===product.id);
+    if(index>=0) products[index]=product; else products.unshift(product);
+
+    showStatus('Сохраняю изменения в GitHub...');
+    await api('/api/admin?action=save',{
+      method:'POST',
+      body:JSON.stringify({products})
+    });
+
+    closeModal();
+    render();
+    showStatus('Готово. Изменения отправлены в GitHub. Vercel обновит сайт автоматически.');
+  }catch(e){showStatus(e.message,true)}
+}
+
+async function deleteProduct(){
+  if(!editingId || !confirm('Удалить этот товар?'))return;
+  products=products.filter(x=>x.id!==editingId);
+  try{
+    showStatus('Удаляю товар...');
+    await api('/api/admin?action=save',{method:'POST',body:JSON.stringify({products})});
+    closeModal();render();showStatus('Товар удалён.');
+  }catch(e){showStatus(e.message,true)}
+}
+
+$('imageFile').addEventListener('change',()=>{
+  const file=$('imageFile').files[0];
+  if(!file)return;
+  $('preview').src=URL.createObjectURL(file);
+  $('preview').classList.remove('hidden');
+});
+
+$('password').addEventListener('keydown',e=>{if(e.key==='Enter')login()});
+
+function fileToDataURL(file){
+  return new Promise((resolve,reject)=>{
+    const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file);
+  });
+}
+function money(n){return Number(n||0).toLocaleString('ru-RU')}
+function esc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+let statusTimer;
+function showStatus(msg,error=false){
+  const el=$('status');el.textContent=(error?'❌ ':'✅ ')+msg;el.style.background=error?'#fff0f0':'#eef7ee';el.classList.add('show');
+  clearTimeout(statusTimer);statusTimer=setTimeout(()=>el.classList.remove('show'),6000);
+}
+</script>
+</body>
+</html>
